@@ -1,0 +1,2 @@
+git clone https://github.com/patelvijayg/hadoopscript.git /home/vagrant/scripts
+git pull
