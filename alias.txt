@@ -1,0 +1,27 @@
+alias l="ls -ltr"
+alias cd..="cd .."
+alias cdhd="cd \$HADOOP_HOME"
+alias cdhdconf="cd \$HADOOP_CONF_DIR"
+alias cdhdlog="cd \$HADOOP_HOME/logs"
+alias cdnamenode="cd \$HADOOP_HOME/infra/namenode"
+alias cddatanode="cd \$HADOOP_HOME/infra/namenode"
+alias cdscript="cd \$SCRIPT_DIR"
+
+alias hd='hdfs dfs'
+alias hdls="hdfs dfs -ls"
+alias hdformat="hdfs namenode -format"
+alias hdlistconf="hdfs org.apache.hadoop.conf.Configuration"
+alias hdreport="hdfs dfsadmin -report"
+alias hdyarnlist="yarn node -list"
+alias hdrefreshnode="hdfs dfsadmin -refreshNodes"
+alias hdgetconfkey='hdfs getconf -confKey'
+
+alias stophdall=" stop-yarn.sh && stop-dfs.sh && echo 'successfully stopped' "
+alias starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && echo 'successfully started' "
+alias lognamenode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-namenode-master*.log"
+alias logdatanode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-datanode-slave*.log"
+alias logyarn="tail -100f \$HADOOP_HOME/logs/yarn-vagrant-resourcemanager-master*.log"
+alias modifyalias="vi \$SCRIPT_DIR/alias.txt"
+alias showalias="cat \$SCRIPT_DIR/alias.txt"
+alias resetalias=". \$SCRIPT_DIR/alias.txt"
+
