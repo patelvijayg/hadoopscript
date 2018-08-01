@@ -6,9 +6,9 @@ alias cdhdlog="cd \$HADOOP_HOME/logs"
 alias cdnamenode="cd \$HADOOP_HOME/infra/namenode"
 alias cddatanode="cd \$HADOOP_HOME/infra/namenode"
 alias cdscript="cd \$SCRIPT_DIR"
-alias cdsparkconf="cd \SPARK_CONF_DIR"
-alias cdspark="cd \SPARK_HOME"
-alias cdsparklog="cd \SPARK_HOME/logs"
+alias cdsparkconf="cd \$SPARK_CONF_DIR"
+alias cdspark="cd \$SPARK_HOME"
+alias cdsparklog="cd \$SPARK_HOME/logs"
 
 alias hd='hdfs dfs'
 alias hdls="hdfs dfs -ls"

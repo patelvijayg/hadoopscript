@@ -21,9 +21,9 @@ sudo chown -R vagrant:vagrant $SPARK_HOME/
 
 MAKE NOTE : logout or open other session.
 
-./reset_factory.sh 
 ./copy_files_on_master.sh 
 ./syncnode.sh 
+./reset_factory.sh 
 starthdall 
 ./unittest.sh 
 
