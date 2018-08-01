@@ -26,4 +26,4 @@ alias logyarn="tail -100f \$HADOOP_HOME/logs/yarn-vagrant-resourcemanager-master
 alias modifyalias="vi \$SCRIPT_DIR/alias.txt"
 alias showalias="cat \$SCRIPT_DIR/alias.txt"
 alias resetalias=". \$SCRIPT_DIR/alias.txt"
-
+alias checkout="\$SCRIPT_DIR/gitcheckout.sh"
