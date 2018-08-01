@@ -14,8 +14,22 @@ $SCRIPT_DIR/unittest.sh
 git reset --hard FETCH_HEAD
 git pull
 
+step to prepare.
+mv /home/vagrant/scripts /home/vagrant/old_scripts
+sudo chown -R vagrant:vagrant $HADOOP_HOME/
+sudo chown -R vagrant:vagrant $SPARK_HOME/
 
-git clone https://github.com/patelvijayg/hadoopscript.git /home/vagrant/scripts
+MAKE NOTE : logout or open other session.
+
+./reset_factory.sh 
+./copy_files_on_master.sh 
+./syncnode.sh 
+starthdall 
+./unittest.sh 
+
+
 git config --global user.email "patelvijayg@gmail.com"
+git clone https://github.com/patelvijayg/hadoopscript.git /home/vagrant/scripts
+
 git commit -m "added execute permission"
 git push

@@ -5,9 +5,10 @@ hadoopfilesdir=$SCRIPT_DIR/hadoopfiles
 sparkfilesdir=$SCRIPT_DIR/sparkfiles
 echo "copying hadoop files from  $hadoopfiles to master node $HADOOP_HOME/etc/hadoop/"
 
-cp -Rf $hadoopfilesdir/*.xml $HADOOP_HOME/etc/hadoop/
-cp -Rf $hadoopfilesdir/*.sh $HADOOP_HOME/etc/hadoop/
+cp -Rf $hadoopfilesdir/* $HADOOP_HOME/etc/hadoop/
+#cp -Rf $hadoopfilesdir/*.xml $HADOOP_HOME/etc/hadoop/
+#cp -Rf $hadoopfilesdir/*.sh $HADOOP_HOME/etc/hadoop/
 
-cp -Rf $sparkfilesdir/*.* $SPARK_CONF_DIR/
+cp -Rf $sparkfilesdir/* $SPARK_CONF_DIR/
 
 echo "Setup is successfully"
