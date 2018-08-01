@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<property>
+		<name>yarn.nodemanager.aux-services</name>
+		<value>mapreduce_shuffle</value> 
+	</property>
+	<property>
+		<name>yarn.resourcemanager.hostname</name>
+		<value>master1</value>
+		<description>This will be act as master for yarn cluster</description>
+	</property>
+	<property>
+		<name>yarn.resourcemanager.scheduler.address</name>
+		<value>${yarn.resourcemanager.hostname}:8030</value>
+	</property>
+	<property>
+		<name>yarn.resourcemanager.resource-tracker.address</name>
+		<value>${yarn.resourcemanager.hostname}:8031</value>
+	</property>
+	<property>
+		<name>yarn.resourcemanager.address</name>
+		<value>${yarn.resourcemanager.hostname}:8032</value>
+	</property>
+	<property>
+		<name>yarn.nodemanager.resource.memory-mb</name>
+		<value>128</value>
+	</property>
+	<property>
+		<name>yarn.scheduler.minimum-allocation-mb</name>
+		<value>64</value>
+	</property>
+
+	<property>
+		 <name>yarn.ipc.serializer.type</name>
+		 <value>protocolbuffers</value>
+	</property> 
+	<property>
+		 <name>yarn.resourcemanager.webapp.address</name>
+		 <value>${yarn.resourcemanager.hostname}:8088</value>
+	</property> 
+	<property>
+		 <name>yarn.resourcemanager.resource-tracker.address</name>
+		 <value>${yarn.resourcemanager.hostname}:8031</value>
+	</property> 
+	<property>
+		 <name>yarn.resourcemanager.admin.address</name>
+		 <value>${yarn.resourcemanager.hostname}:8033</value>
+	</property> 
+	<property>
+		 <name>yarn.nodemanager.hostname</name>
+		 <value>0.0.0.0</value>
+		 <description>this will be use for slave node</description>
+	</property> 
+	<property>
+		 <name>yarn.nodemanager.address</name>
+		 <value>${yarn.nodemanager.hostname}:0</value>
+	</property> 
+	<property>
+		 <name>yarn.nodemanager.localizer.address</name>
+		 <value>${yarn.nodemanager.hostname}:8040</value>
+	</property> 	
+	<property>
+		 <name>yarn.nodemanager.webapp.address</name>
+		 <value>${yarn.nodemanager.hostname}:8042</value>
+	</property> 
+	<property>
+		 <name>yarn.log.dir</name>
+		 <value>/usr/hadoop/logs</value>
+	</property> 
+</configuration>

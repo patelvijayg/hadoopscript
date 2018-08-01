@@ -16,8 +16,10 @@ alias hdyarnlist="yarn node -list"
 alias hdrefreshnode="hdfs dfsadmin -refreshNodes"
 alias hdgetconfkey='hdfs getconf -confKey'
 
-alias stophdall=" stop-yarn.sh && stop-dfs.sh && echo 'successfully stopped' "
-alias starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && echo 'successfully started' "
+alias startspark="\$SPARK_HOME/sbin/start-all.sh"
+alias stopspark="\$SPARK_HOME/sbin/stop-all.sh"
+alias stophdall=" stopspark ; sleep 30 ; stop-yarn.sh ; sleep 30 ; stop-dfs.sh ; echo 'successfully stopped' "
+alias starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && sleep 4 && startspark &&  echo 'successfully started' "
 alias lognamenode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-namenode-master*.log"
 alias logdatanode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-datanode-slave*.log"
 alias logyarn="tail -100f \$HADOOP_HOME/logs/yarn-vagrant-resourcemanager-master*.log"

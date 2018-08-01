@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<property>
+		 <name>fs.defaultFS</name>
+		 <value>hdfs://master1:8020</value>
+	</property>   
+	<property>
+		 <name>hadoop.tmp.dir</name>
+		 <value>/tmp/hdpdata</value>
+	</property>   
+	<property>
+		 <name>file.client-write-packet-size</name>
+		 <value>65536</value>
+	</property> 
+</configuration>
