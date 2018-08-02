@@ -5,4 +5,9 @@
         <name>mapreduce.framework.name</name>
         <value>yarn</value>
     </property>
+	<property>
+		<name>mapreduce.map.memory.mb</name>
+		<value>64</value>
+		<description>Resource Manager will allocate the memory for each new container which can be use in map or reduce</description>
+	</property>
 </configuration>

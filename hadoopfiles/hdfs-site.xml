@@ -13,14 +13,9 @@
    </property>
     <property>
       <name>dfs.heartbeat.interval</name>
-      <value>5</value>
+      <value>3</value>
 	  <description>interval of hearbeat in seconds</description>
    </property>
-   <property>
-      <name>dfs.namenode.stale.datanode.interval</name>
-      <value>25</value>
-	  <description>second</description>
-   </property> 
    <property>
       <name>dfs.namenode.heartbeat.recheck-interval</name>
       <value>10000</value>

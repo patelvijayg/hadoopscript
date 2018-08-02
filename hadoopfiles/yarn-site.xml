@@ -22,13 +22,22 @@
 		<name>yarn.resourcemanager.address</name>
 		<value>${yarn.resourcemanager.hostname}:8032</value>
 	</property>
+
 	<property>
 		<name>yarn.nodemanager.resource.memory-mb</name>
+		<value>256</value>
+		<description>Amount of memory which can be YARN can use and it should be exclude the OS and HDFS process memory</description>
+	</property>
+
+	<property>
+		<name>yarn.scheduler.maximum-allocation-mb</name>
 		<value>128</value>
+		<description>it is maximum memory allocation for one container </description>
 	</property>
 	<property>
 		<name>yarn.scheduler.minimum-allocation-mb</name>
-		<value>64</value>
+		<value>32</value>
+		<description>it is minimum memory allocation for one container </description>
 	</property>
 
 	<property>

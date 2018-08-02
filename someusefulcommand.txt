@@ -10,7 +10,8 @@ hdfs fsck / -openforwrite
 hdfs fsck /file -files -blocks -locations
 hadoop fs -Ddfs.replication=2 -put file /hadoopdir
 hdfs getconf -confKey dfs.heartbeat.interval
-
+$SPARK_HOME/sbin/stop-all.sh && slepp 4 && copyandsync
+$SPARK_HOME/bin/spark-submit $SPARK_HOME/examples/src/main/python/pi.py  1000 --conf spark.executor.memory=64m  --conf spark.executor.cores=1 --master yarn --deploy-mode client
 ssh -t slave1  "~/scripts/node.sh start"
 
  ./yarn-daemon.sh start nodemanager
