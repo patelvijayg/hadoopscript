@@ -1,37 +1,51 @@
-alias l="ls -ltr"
-alias listports='sudo netstat -untlp'
-alias tdump='echo "sudo tcpdump -i any tcp port 8020 -vvv -XXX -w /tmp/aaa.pcap"'
-alias cd..="cd .."
-alias cdhd="cd \$HADOOP_HOME"
-alias cdhdconf="cd \$HADOOP_CONF_DIR"
-alias cdhdlog="cd \$HADOOP_HOME/logs"
-alias cdnamenode="cd \$HADOOP_HOME/infra/namenode"
-alias cddatanode="cd \$HADOOP_HOME/infra/namenode"
-alias cdscript="cd \$SCRIPT_DIR"
-alias cdsparkconf="cd \$SPARK_CONF_DIR"
-alias cdspark="cd \$SPARK_HOME"
-alias cdsparklog="cd \$SPARK_HOME/logs"
+#only for type mistake 
+alias l='ls -ltra'
+alias cd..='cd ..'
+alias c='clear'
+alias u='cd ..'
 
-alias hd='hdfs dfs'
-alias hdls="hdfs dfs -ls"
-alias hdformat="hdfs namenode -format"
-alias hdlistconf="hdfs org.apache.hadoop.conf.Configuration"
-alias hdreport="hdfs dfsadmin -report"
-alias hdyarnlist="yarn node -list"
-alias hdrefreshnode="hdfs dfsadmin -refreshNodes"
-alias hdgetconfkey='hdfs getconf -confKey'
+alias .listports='sudo netstat -untlp'
+alias .tcpdumpfile='echo "sudo tcpdump -i any tcp port 8020 -vvv -XXX -w /tmp/aaa.pcap"'
+alias .cdhd="cd \$HADOOP_HOME"
+alias .cdhdconf="cd \$HADOOP_CONF_DIR"
+alias .cdhdlog="cd \$HADOOP_HOME/logs"
+alias .cdnamenode="cd \$HADOOP_HOME/infra/namenode"
+alias .cddatanode="cd \$HADOOP_HOME/infra/namenode"
+alias .cdscript="cd \$SCRIPT_DIR"
+alias .cdsparkconf="cd \$SPARK_CONF_DIR"
+alias .cdspark="cd \$SPARK_HOME"
+alias .cdsparklog="cd \$SPARK_HOME/logs"
 
-alias startspark="\$SPARK_HOME/sbin/start-all.sh"
-alias stopspark="\$SPARK_HOME/sbin/stop-all.sh"
-alias stophdall=" stopspark ; sleep 30 ; stop-yarn.sh ; sleep 30 ; stop-dfs.sh ; echo 'successfully stopped' "
-alias starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && sleep 4 && startspark &&  echo 'successfully started' "
-alias lognamenode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-namenode-master*.log"
-alias logdatanode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-datanode-slave*.log"
-alias logyarn="tail -100f \$HADOOP_HOME/logs/yarn-vagrant-resourcemanager-master*.log"
-alias logspark="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.master.*.out"
-alias logsparkworker="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.worker.*.out"
-alias modifyalias="vi \$SCRIPT_DIR/alias.txt"
-alias showalias="cat \$SCRIPT_DIR/alias.txt"
-alias resetalias=". \$SCRIPT_DIR/alias.txt"
-alias checkout="\$SCRIPT_DIR/gitcheckout.sh"
-alias copyandsync="\$SCRIPT_DIR/copy_files_on_master.sh && sleep 3 && \$SCRIPT_DIR/syncnode.sh"
+alias .hd='hdfs dfs'
+alias .hdls="hdfs dfs -ls"
+alias .hdformat="hdfs namenode -format"
+alias .hdlistconf="hdfs org.apache.hadoop.conf.Configuration"
+alias .hdreport="hdfs dfsadmin -report"
+
+alias .hdrefreshnode="hdfs dfsadmin -refreshNodes"
+alias .hdgetconfkey='hdfs getconf -confKey'
+alias .stophdfs="\$HADOOP_HOME/sbin/stop-dfs.sh"
+alias .starthdfs="\$HADOOP_HOME/sbin/start-dfs.sh"
+
+
+alias .yarnnodelist='yarn node -list'
+alias .yarnapplist='yarn application -list'
+alias .yarnrefresh='yarn rmadmin -refreshNodes'
+alias .yarnformat='yarn resourcemanager -format-state-store'
+alias .showyarnloglevel='echo "yarn yarn daemonlog -getlevel slave1:8042 org.apache.hadoop.yarn.server.resourcemanager.rmapp.RMAppImpl"'
+
+alias .startspark="\$SPARK_HOME/sbin/start-all.sh"
+alias .stopspark="\$SPARK_HOME/sbin/stop-all.sh"
+
+alias .stophdall=" stopspark ; sleep 30 ; stop-yarn.sh ; sleep 30 ; stop-dfs.sh ; echo 'successfully stopped' "
+alias .starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && sleep 4 && startspark &&  echo 'successfully started' "
+alias .lognamenode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-namenode-master*.log"
+alias .logdatanode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-datanode-slave*.log"
+alias .logyarn="tail -100f \$HADOOP_HOME/logs/yarn-vagrant-resourcemanager-master*.log"
+alias .logspark="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.master.*.out"
+alias .logsparkworker="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.worker.*.out"
+alias .modifyalias="vi \$SCRIPT_DIR/alias.txt"
+alias .showalias="cat \$SCRIPT_DIR/alias.txt"
+alias .resetalias=". \$SCRIPT_DIR/alias.txt"
+alias .checkout="\$SCRIPT_DIR/gitcheckout.sh"
+alias .copyandsync="\$SCRIPT_DIR/copy_files_on_master.sh && sleep 3 && \$SCRIPT_DIR/syncnode.sh"
