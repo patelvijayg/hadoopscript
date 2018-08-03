@@ -1,4 +1,6 @@
 alias l="ls -ltr"
+alias listports='sudo netstat -untlp'
+alias tdump='echo "sudo tcpdump -i any tcp port 8020 -vvv -XXX -w /tmp/aaa.pcap"'
 alias cd..="cd .."
 alias cdhd="cd \$HADOOP_HOME"
 alias cdhdconf="cd \$HADOOP_CONF_DIR"
@@ -26,8 +28,8 @@ alias starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && sleep 4 && starts
 alias lognamenode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-namenode-master*.log"
 alias logdatanode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-datanode-slave*.log"
 alias logyarn="tail -100f \$HADOOP_HOME/logs/yarn-vagrant-resourcemanager-master*.log"
-alias logspark="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.master.*.log"
-alias logsparkworker="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.worker.*.log"
+alias logspark="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.master.*.out"
+alias logsparkworker="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.worker.*.out"
 alias modifyalias="vi \$SCRIPT_DIR/alias.txt"
 alias showalias="cat \$SCRIPT_DIR/alias.txt"
 alias resetalias=". \$SCRIPT_DIR/alias.txt"

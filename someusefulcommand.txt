@@ -1,15 +1,28 @@
 hdfs version
 hdfs classpath
 hdfs dfs -ls /
+hdfs dfs -Ddfs.replication=2 -put file /hadoopdir
+hdfs dfs -setrep -R -w 2 /data1/uPM_all_metrics-20180730080000-20180730081500.csv
+
 hdfs dfsadmin -report
 hdfs dfsadmin -refreshNodes
+
 hdfs getconf -namenodes
 hdfs getconf -secondaryNameNodes
+hdfs getconf -confKey dfs.heartbeat.interval
+
 hdfs fsck / -files
 hdfs fsck / -openforwrite
 hdfs fsck /file -files -blocks -locations
-hadoop fs -Ddfs.replication=2 -put file /hadoopdir
-hdfs getconf -confKey dfs.heartbeat.interval
+
+yarn application -list
+yarn rmadmin -refreshNodes
+yarn node -list
+yarn resourcemanager -format-state-store
+yarn yarn daemonlog -getlevel slave1:8042 org.apache.hadoop.yarn.server.resourcemanager.rmapp.RMAppImpl
+yarn classpath
+
+
 $SPARK_HOME/sbin/stop-all.sh && slepp 4 && copyandsync
 $SPARK_HOME/bin/spark-submit $SPARK_HOME/examples/src/main/python/pi.py  1000 --conf spark.executor.memory=64m  --conf spark.executor.cores=1 --master yarn --deploy-mode client
 ssh -t slave1  "~/scripts/node.sh start"
@@ -17,15 +30,12 @@ ssh -t slave1  "~/scripts/node.sh start"
  ./yarn-daemon.sh start nodemanager
  ./hadoop-daemon.sh start datanode
 
-dead node criteria
- dfs.heartbeat.interval 5
- dfs.namenode.stale.datanode.interval	50
-update replica
-hdfs dfs -setrep -R -w 2 /data1/uPM_all_metrics-20180730080000-20180730081500.csv
+dead datanode criteria : (10*dfs.heartbeat.interval) seconds + (2*dfs.namenode.heartbeat.recheck-interval)/1000
+
 
 tail -f  yarn-vagrant-nodemanager-slave1.log
 sudo tcpdump -i any udp port 8020 -vvv -w /path/file.pcap
-yarn node -list
+
 
 from pyspark.sql import SparkSession
 sparkSession = SparkSession.builder.appName("firstapp").getOrCreate()
