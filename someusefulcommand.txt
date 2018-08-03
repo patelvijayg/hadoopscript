@@ -62,3 +62,25 @@ sparkSession = SparkSession.builder.appName("firstapp").getOrCreate()
 df_load = sparkSession.read.csv('hdfs://master1/data1/uPM_all_metrics-20180730080000-20180730081500.csv')
 df_load.show()
 
+
+vagrant box list
+
+vagrant up --provider virtualbox --debug
+
+sudo /home/vagrant/extras/scripts/install_java_hadoop_spark.sh
+. ~/.bashrc
+/home/vagrant/scripts/order_script.sh
+
+vagrant halt
+
+vagrant package --output mycentos7.box
+
+vagrant  box add mycentos/7 mycentos7.box
+
+vagrant box remove centos7hadoop
+rm centos7hadoop.box
+vagrant package --output centos7hadoop.box
+vagrant box add centos7hadoop centos7hadoop.box
+
+vagrant destroy -f
+
