@@ -5,7 +5,6 @@ alias c='clear'
 alias u='cd ..'
 
 alias .listports='sudo netstat -untlp'
-alias .tcpdumpfile='echo "sudo tcpdump -i any tcp port 8020 -vvv -XXX -w /tmp/aaa.pcap"'
 alias .cdhd="cd \$HADOOP_HOME"
 alias .cdhdconf="cd \$HADOOP_CONF_DIR"
 alias .cdhdlog="cd \$HADOOP_HOME/logs"
@@ -32,13 +31,16 @@ alias .yarnnodelist='yarn node -list'
 alias .yarnapplist='yarn application -list'
 alias .yarnrefresh='yarn rmadmin -refreshNodes'
 alias .yarnformat='yarn resourcemanager -format-state-store'
-alias .showyarnloglevel='echo "yarn yarn daemonlog -getlevel slave1:8042 org.apache.hadoop.yarn.server.resourcemanager.rmapp.RMAppImpl"'
+
 
 alias .startspark="\$SPARK_HOME/sbin/start-all.sh"
 alias .stopspark="\$SPARK_HOME/sbin/stop-all.sh"
 
-alias .stophdall=" stopspark ; sleep 30 ; stop-yarn.sh ; sleep 30 ; stop-dfs.sh ; echo 'successfully stopped' "
-alias .starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && sleep 4 && startspark &&  echo 'successfully started' "
+alias .startyarn="\$HADOOP_HOME/sbin/start-yarn.sh"
+alias .stopsyarm="\$HADOOP_HOME/sbin/stop-yarn.sh"
+
+alias .stophdall=" .stopspark ; sleep 30 ; stop-yarn.sh ; sleep 30 ; stop-dfs.sh ; echo 'successfully stopped' "
+alias .starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && sleep 4 && .startspark &&  echo 'successfully started' "
 alias .lognamenode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-namenode-master*.log"
 alias .logdatanode="tail -100f \$HADOOP_HOME/logs/hadoop-vagrant-datanode-slave*.log"
 alias .logyarn="tail -100f \$HADOOP_HOME/logs/yarn-vagrant-resourcemanager-master*.log"
@@ -46,6 +48,21 @@ alias .logspark="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.dep
 alias .logsparkworker="tail -100f \$SPARK_HOME/logs/spark-vagrant-org.apache.spark.deploy.worker.*.out"
 alias .modifyalias="vi \$SCRIPT_DIR/alias.txt"
 alias .showalias="cat \$SCRIPT_DIR/alias.txt"
-alias .resetalias=". \$SCRIPT_DIR/alias.txt"
+alias .resetalias="source \$SCRIPT_DIR/alias.txt"
 alias .checkout="\$SCRIPT_DIR/gitcheckout.sh"
 alias .copyandsync="\$SCRIPT_DIR/copy_files_on_master.sh && sleep 3 && \$SCRIPT_DIR/syncnode.sh"
+
+cmdlist=$(cat <<EOF
+
+sudo tcpdump -i any tcp port 8020 -vvv -XXX -w /tmp/aaa.pcap
+yarn yarn daemonlog -getlevel slave1:8042 org.apache.hadoop.yarn.server.resourcemanager.rmapp.RMAppImpl
+hdfs org.apache.hadoop.conf.Configuration
+hdfs dfsadmin -safemode leave
+hdfs fs -Ddfs.blocksize=1048576 -put /tmp/dataset1/uPM_all_metrics-20180730080000-20180730081500.csv /unittest
+hadoop fs -setrep -w 2 /user/cloudera/vijay/file1.csv
+hdfs fs -du -s -h /unittest
+
+
+EOF
+)
+alias .showcommands='echo "${cmdlist}"'
