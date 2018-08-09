@@ -14,8 +14,7 @@ echo "single file loaded for unit testing"
 else
 #data load
 dir2=public
-[[ ! -d /$dir2 ]] && mkdir /$dir2
-sudo chown -R vagrant:vagrant /public
+[[ ! -d /$dir2 ]] && sudo mkdir /$dir2 && sudo chown -R vagrant:vagrant /public
 7za x $SCRIPT_DIR/datafiles/data-master.7z -o/$dir2 -y
 hdfs dfs -rm -r -f /$dir2
 hdfs dfs -mkdir /$dir2
