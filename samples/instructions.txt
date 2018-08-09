@@ -1,0 +1,2 @@
+$SPARK_HOME/bin/spark-submit $SCRIPT_DIR/samples/hdfs_order_take.py --master local[2]
+$SPARK_HOME/bin/spark-submit $SCRIPT_DIR/samples/local_order_take.py --master local[2]
