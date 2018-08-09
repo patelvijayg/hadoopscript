@@ -1,7 +1,7 @@
 #!/bin/bash
 onefile=companylist_noheader.csv
 dir1=unittest
-dir2=data
+dir2=public
 cp $SCRIPT_DIR/datafiles/data-master.7z /tmp/
 cd /tmp
 7za x data-master.7z -o./data-master -y
