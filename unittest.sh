@@ -10,5 +10,5 @@ hdfs dfs -rm -r -f /$dir2
 hdfs dfs -mkdir /$dir1
 hdfs dfs -mkdir /$dir2
 hdfs dfs -put /tmp/data-master/$onefile /$dir1
-hdfs dfs -put /tmp/data-master/* /data/
+hdfs dfs -put /tmp/data-master/* /$dir2/
 hdfs dfs -tail /$dir1/$onefile
