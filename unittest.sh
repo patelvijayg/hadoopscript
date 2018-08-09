@@ -1,10 +1,10 @@
 #!/bin/bash
-onefile=uPM_all_metrics-20180730080000-20180730081500.csv
+onefile=companylist_noheader.csv
 dir1=unittest
-cp $SCRIPT_DIR/datafiles/dataset1.7z /tmp/
+cp $SCRIPT_DIR/datafiles/data-master.7z /tmp/
 cd /tmp
-7za x dataset1.7z -y
+7za x data-master.7z -o./data-master -y
 hdfs dfs -rm /$dir1
 hdfs dfs -mkdir /$dir1
-hdfs dfs -put /tmp/dataset1/$onefile /$dir1
-hdfs dfs -cat /$dir1/$onefile
+hdfs dfs -put /tmp/data-master/$onefile /$dir1
+hdfs dfs -tail /$dir1/$onefile
