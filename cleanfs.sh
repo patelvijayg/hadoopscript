@@ -7,7 +7,7 @@ do
 	echo "$i deleted ........" 
 done
 
-listofdir=($HADOOP_HOME/infra/namenode $HADOOP_HOME/infra/datanode $HADOOP_HOME/logs $SPARK_HOME/logs /tmp/sparkevent/eventLog)
+listofdir=($HADOOP_HOME/infra/namenode $HADOOP_HOME/infra/datanode $HADOOP_HOME/infra/jobhistory $HADOOP_HOME/logs $SPARK_HOME/logs /tmp/sparkevent/eventLog /tmp/jobhistory)
 for i in "${listofdir[@]}"
 do
 [[ -d $i ]] && rm -rf $i

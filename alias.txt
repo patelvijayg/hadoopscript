@@ -25,7 +25,7 @@ alias .hdrefreshnode="hdfs dfsadmin -refreshNodes"
 alias .hdgetconfkey='hdfs getconf -confKey'
 alias .stophdfs="\$HADOOP_HOME/sbin/stop-dfs.sh"
 alias .starthdfs="\$HADOOP_HOME/sbin/start-dfs.sh"
-
+alias .restophdfs=".stophdfs && .starthdfs"
 
 alias .yarnnodelist='yarn node -list'
 alias .yarnapplist='yarn application -list'
@@ -35,9 +35,17 @@ alias .yarnformat='yarn resourcemanager -format-state-store'
 
 alias .startspark="\$SPARK_HOME/sbin/start-all.sh"
 alias .stopspark="\$SPARK_HOME/sbin/stop-all.sh"
+alias .restartspark=".stopspark && .startspark"
 
 alias .startyarn="\$HADOOP_HOME/sbin/start-yarn.sh"
 alias .stopsyarm="\$HADOOP_HOME/sbin/stop-yarn.sh"
+alias .restartyarn=".stopsyarm && .startyarn"
+
+alias .startproxy="yarn-daemon.sh --config $HADOOP_CONF_DIR start proxyserver"
+alias .startjobhistory="mr-jobhistory-daemon.sh --config $HADOOP_CONF_DIR start historyserver"
+
+alias .stopproxy="yarn-daemon.sh --config $HADOOP_CONF_DIR stop proxyserver"
+alias .stopjobhistory="mr-jobhistory-daemon.sh --config $HADOOP_CONF_DIR stop historyserver"
 
 alias .stophdall=" .stopspark ; sleep 30 ; stop-yarn.sh ; sleep 30 ; stop-dfs.sh ; echo 'successfully stopped' "
 alias .starthdall=" start-dfs.sh && sleep 4 && start-yarn.sh && sleep 4 && .startspark &&  echo 'successfully started' "

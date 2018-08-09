@@ -10,4 +10,24 @@
 		<value>64</value>
 		<description>Resource Manager will allocate the memory for each new container which can be use in map or reduce</description>
 	</property>
+	  <property>
+		<name>mapreduce.jobhistory.address</name>
+		<value>master1:10020</value>
+	  </property>
+	  <property>
+		<name>mapreduce.jobhistory.webapp.address</name>
+		<value>master1:19888</value>
+	  </property>
+	  <property>
+		<name>mapreduce.jobhistory.bind-host</name>
+		<value>0.0.0.0</value>
+	  </property>
+	  <property>
+		<name>mapreduce.jobhistory.intermediate-done-dir</name>
+		<value>/tmp/jobhistory</value>
+	  </property>
+	  <property>
+		<name>mapreduce.jobhistory.done-dir</name>
+		<value>/usr/hadoop/infra/jobhistory</value>
+	  </property>	
 </configuration>
