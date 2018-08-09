@@ -1,15 +1,19 @@
 #!/bin/bash
-echo "deleting $HADOOP_HOME/infra/namenode"
+#you can add the folder wish to delete during reset filesystem
+listofdir=($HADOOP_HOME/infra/namenode $HADOOP_HOME/infra/datanode $HADOOP_HOME/logs $SPARK_HOME/logs /tmp/sparkevent)
+for i in "${listofdir[@]}"
+do
+[[ -d $i ]] && rm -rf $i
+echo "$i deleted ........" 
+mkdir -p $i
+echo "$i created ........" 
+done
 
-[ -d $HADOOP_HOME/infra/namenode ] && rm -rf $HADOOP_HOME/infra/namenode
-[ -d $HADOOP_HOME/infra/datanode ] && rm -rf $HADOOP_HOME/infra/datanode
-[ -d $HADOOP_HOME/logs ] && rm -rf $HADOOP_HOME/logs
-[ -d $SPARK_HOME/logs ] && rm -rf $SPARK_HOME/logs
-[ -d /tmp/sparkevent/eventLog ] && rm -rf /tmp/sparkevent/eventLog
-mkdir -p $HADOOP_HOME/infra/namenode
-mkdir -p $HADOOP_HOME/infra/datanode
-mkdir -p $HADOOP_HOME/logs
-mkdir -p $SPARK_HOME/logs
-mkdir -p /tmp/sparkevent/eventLog
+listofdir=($(echo /tmp/spark*))
+for i in "${listofdir[@]}"
+do
+[[ -d $i ]] && rm -rf $i
+	echo "$i deleted ........" 
+done
 
-echo "deleted $HADOOP_HOME/hadoop/infra and $HADOOP_PREFIX/logs"
+echo "Completed the operation"
