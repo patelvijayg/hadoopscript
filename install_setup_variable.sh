@@ -21,4 +21,6 @@ fi
 sudo chown -R vagrant:vagrant $homepath/
 sudo chown -R vagrant:vagrant $HADOOP_HOME/
 sudo chown -R vagrant:vagrant $SPARK_HOME/
+[[ ! -d /public ]] && mkdir /public
+sudo chown -R vagrant:vagrant /public
 echo "Setup is successfully"
