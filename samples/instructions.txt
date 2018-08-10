@@ -1,2 +1,27 @@
 $SPARK_HOME/bin/spark-submit $SCRIPT_DIR/samples/hdfs_order_take.py --master local[2]
 $SPARK_HOME/bin/spark-submit $SCRIPT_DIR/samples/local_order_take.py --master local[2]
+
+
+
+converting from one format to other
+df1 = spark.read.load("file:///tmp/northwind/csv/regions.csv",format="csv", sep=",", inferSchema="true", header="true")
+df1.write.save("file:///tmp/rg.json", format="json")
+
+df2 = spark.read.load("file:///tmp/northwind/csv/order_details.csv",format="csv", sep=",", inferSchema="true", header="true")
+df2.write.save("file:///tmp/order_details", format="json")
+
+
+regions_df = spark.read.format("csv").option("mode", "FAILFAST").option("header", "true").load("file:///tmp/northwind/csv/regions.csv")
+regions_df.select(regions_df["regionID"],regions_df["regionDescription"]).show()
+regions_df.createOrReplaceTempView("regions")
+sql_df=spark.sql("SELECT * FROM regions")
+sql_df.show()
+
+
+regions_df.createGlobalTempView("regions_g")
+spark.sql("SELECT * FROM global_temp.regions_g").show()
+
+
+
+
+/usr/spark/examples/src/main/resources
