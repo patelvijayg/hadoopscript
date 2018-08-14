@@ -23,4 +23,5 @@ sudo chown -R vagrant:vagrant $HADOOP_HOME/
 sudo chown -R vagrant:vagrant $SPARK_HOME/
 [[ ! -d /public ]] && mkdir /public
 sudo chown -R vagrant:vagrant /public
+sudo yum -y install nc
 echo "Setup is successfully"
