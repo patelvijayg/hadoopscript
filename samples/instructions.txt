@@ -1,5 +1,5 @@
 cd 
-pyspark --master local[4]
+pyspark --master local[2] --conf spark.ui.port=4050
 
 PYSPARK_PYTHON
 
