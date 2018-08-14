@@ -19,9 +19,8 @@
    <property>
       <name>dfs.namenode.heartbeat.recheck-interval</name>
       <value>10000</value>
-	  <description>miliseconds</description>
+	  <description>miliseconds. The formula for dead node is = 2 * heartbeat.recheck.interval(miliseconds) + 10 * heartbeat.interval(seconds)</description>
    </property> 
-   
    <property>
       <name>dfs.namenode.fs-limits.min-block-size</name>
       <value>50000</value>
@@ -65,4 +64,27 @@
       <name>dfs.namenode.edits.dir</name>
       <value>${dfs.namenode.name.dir}</value>
    </property>	
+   
+   <property>
+      <name>dfs.namenode.checkpoint.dir</name>
+      <value>/usr/hadoop/infra/secondarynode</value>
+	  <description>NA</description>
+   </property>	   
+     <property>
+      <name>dfs.namenode.checkpoint.period</name>
+      <value>3600</value>
+	  <description>The number of seconds between two periodic checkpoints.</description>
+   </property>	
+   <property>
+      <name>dfs.namenode.checkpoint.txns</name>
+      <value>1000</value>
+	  <description>The Secondary NameNode or CheckpointNode will create a checkpoint of the namespace every 'dfs.namenode.checkpoint.txns' transactions, regardless of whether 'dfs.namenode.checkpoint.period' has expired.
+</description>
+   </property>	
+   <property>
+      <name>dfs.namenode.checkpoint.check.period</name>
+      <value>60</value>
+	  <description>The SecondaryNameNode and CheckpointNode will poll the NameNode every 'dfs.namenode.checkpoint.check.period' seconds to query the number of uncheckpointed transactions.</description>
+   </property>	   
+  
 </configuration>

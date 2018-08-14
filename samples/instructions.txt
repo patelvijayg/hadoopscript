@@ -1,3 +1,13 @@
+cd 
+pyspark --master local[4]
+
+PYSPARK_PYTHON
+
+PYSPARK_DRIVER_PYTHON=ipython ./bin/pyspark
+
+PYSPARK_DRIVER_PYTHON=jupyter 
+PYSPARK_DRIVER_PYTHON_OPTS=notebook ./bin/pyspark
+
 $SPARK_HOME/bin/spark-submit $SCRIPT_DIR/samples/hdfs_order_take.py --master local[2]
 $SPARK_HOME/bin/spark-submit $SCRIPT_DIR/samples/local_order_take.py --master local[2]
 
@@ -22,6 +32,77 @@ regions_df.createGlobalTempView("regions_g")
 spark.sql("SELECT * FROM global_temp.regions_g").show()
 
 
-
+spark.catalog.listColumns("mysparkdb","surveys").foreach(x=>println(x.name + "-->" + x.dataType.toUpperCase ))     
 
 /usr/spark/examples/src/main/resources
+
+
+
+df = spark.read \
+              .format("csv") \
+              .option("header","true") \
+              .option("inferSchema","true") \
+              .option("nullValue","NA") \
+              .option("timestampFormat","yyyy-MM-dd'T'HH:mm?:ss") \
+              .option("mode","failfast") \
+              .option("path","/usr/spark/examples/src/main/resources/people.txt") \
+              .load()     
+df.select("name", "Age").filter("Age > 30").show
+
+df.write \
+    .format("json") \
+    .option("timestampFormat","yyyy-MM-dd HH:mm:ss") \
+    .mode("overwrite") \
+    .save("/home/prashant/spark-data/mental-health-in-tech-survey/json-data/")  
+
+spark-shell --packages org.postgresql:postgresql:9.4.1207	
+dfout.write
+      .format("jdbc")
+      .mode("overwrite")
+      .option("truncate", "true")
+      .option("driver", "org.postgresql.Driver")
+      .option("url", "jdbc:postgresql://10.128.0.4:5432/sparkDB")
+      .option("dbtable", "table")
+      .option("user", "user")
+      .option("password","pass")
+      .save()                      
+	  
+ spark-shell --packages datastax:spark-cassandra-connector:2.0.1-s_2.11 
+dfout.write
+         .format("org.apache.spark.sql.cassandra")
+         .mode("overwrite")
+         .option("confirm.truncate","true")
+         .option("spark.cassandra.connection.host","10.142.0.3")
+         .option("spark.cassandra.connection.port","9042")
+         .option("keyspace","sparkdb")
+         .option("table","survey_results")
+         .save()                           	
+		 
+
+
+import pyspark.sql.functions as fn		 
+
+ord = spark.read.format("csv").option("header","true").option("inferSchema","true").option("nullValue","NA").option("timestampFormat","yyyy-MM-dd'T'HH:mm?:ss").option("mode","failfast").option("path","file:///tmp/northwind/csv/orders.csv").load()
+orddtl = spark.read.format("csv").option("header","true").option("inferSchema","true").option("nullValue","NA").option("timestampFormat","yyyy-MM-dd'T'HH:mm?:ss").option("mode","failfast").option("path","file:///tmp/northwind/csv/order_details.csv").load()
+prd = spark.read.format("csv").option("header","true").option("inferSchema","true").option("nullValue","NA").option("timestampFormat","yyyy-MM-dd'T'HH:mm?:ss").option("mode","failfast").option("path","file:///tmp/northwind/csv/products.csv").load()
+
+
+dforddtl=orddtl.join(ord,orddtl["orderID"]==ord["orderID"]).select(ord["orderID"],ord["customerID"],orddtl["productID"],ord["shipCity"],orddtl["unitPrice"],orddtl["quantity"],(orddtl["unitPrice"]*orddtl["quantity"]-orddtl["discount"]).alias("amount"))
+
+
+dforddtl.groupby(dforddtl["orderID"],dforddtl["customerID"],dforddtl["shipCity"]).agg(fn.sum("amount")).show()		 
+
+
+dfcity=dforddtl.where("shipCity like 'S%'").groupby("shipCity").agg(func.sum("amount").alias("total amount"), func.sum("quantity").alias("quantity")).show()
+
+dforddtl.join(prd,prd["productID"]==dforddtl["productID"]).select(dforddtl["orderID"],prd["productName"],dforddtl["productID"],dforddtl["customerID"],dforddtl["amount"]).groupBy(prd["productName"]).agg(fn.sum("amount")).show()
+
+ht = spark.read.format("json").option("inferSchema","true").option("nullValue","NA").option("path","http://10.229.118.8:5100").load()
+
+
+
+import json,requests
+import requests
+
+r = requests.get("http://192.168.0.13:9200/sample.json")
+df = sqlContext.createDataFrame([json.loads(line) for line in r.iter_lines()])
