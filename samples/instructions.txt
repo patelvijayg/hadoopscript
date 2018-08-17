@@ -46,6 +46,7 @@ df = spark.read \
               .option("timestampFormat","yyyy-MM-dd'T'HH:mm?:ss") \
               .option("mode","failfast") \
               .option("path","/usr/spark/examples/src/main/resources/people.txt") \
+			  .mode("overwrite") \
               .load()     
 df.select("name", "Age").filter("Age > 30").show
 
@@ -106,3 +107,29 @@ import requests
 
 r = requests.get("http://192.168.0.13:9200/sample.json")
 df = sqlContext.createDataFrame([json.loads(line) for line in r.iter_lines()])
+
+
+
+for i in $(cat ~/empstreamdata.txt); do echo $i; sleep 2; done | nc -lk 9999
+
+.cdspark
+./bin/spark-submit --master local[4]  $SCRIPT_DIR/samples/streamtest.py
+
+
+
+sudo tcpdump -i any src host 192.168.2.21 and dst port 9999 -vvv -nnn  -XXX
+
+
+ df_1.withColumn("Year",df_1.col("oldYear").cast("int")).drop("oldYear")
+ df.col("Year").cast("int")
+ df.col("Year").cast("int")
+ 
+ 
+import pyspark.sql.functions as fn
+orddtlselect.col("shippedDate").cast("timestamp")
+newdf=orddtlselect.withColumn("shippedDate",orddtlselect.col("shippedDate").cast("timestamp"))
+#custbyciti=orddtlselect.groupBy(orddtlselect["shipCity"]).agg(fn.sum("amount")).show()
+newdf.printschema()
+
+
+val df2 = orddtlselect.selectExpr("cast(shippedDate as timestamp) dt","orderID","shipCity","customerID","shippedDate","productID","unitPrice","quantity","discount","amount")
