@@ -1,6 +1,8 @@
 cd 
 pyspark --master local[2] --conf spark.ui.port=4050
 
+import rlcompleter,readline;readline.parse_and_bind("tab: complete")
+
 PYSPARK_PYTHON
 
 PYSPARK_DRIVER_PYTHON=ipython ./bin/pyspark

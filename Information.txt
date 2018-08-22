@@ -1,3 +1,13 @@
+new VM
+checkout 
+. ./alias.txt 
+.checkout 
+./install_setup_variable.sh 
+.resetalias
+
+https://github.com/apache/spark/tree/v2.3.1
+
+
 reset entire dfs system. (before run this please stophdall)
 $SCRIPT_DIR/reset_factory.sh
 
@@ -6,7 +16,6 @@ $SCRIPT_DIR/copy_files_on_master.sh
 
 after change run this to sync with all the nodes from master hadoop conf dir
 $SCRIPT_DIR/syncnode.sh  
-
 
 
 $SCRIPT_DIR/unittest.sh
@@ -33,3 +42,5 @@ git clone https://github.com/patelvijayg/hadoopscript.git /home/vagrant/scripts
 
 git commit -m "added execute permission"
 git push
+
+ln -s /usr/kafka_2.11-2.0.0 /usr/kafka
