@@ -135,3 +135,47 @@ newdf.printschema()
 
 
 val df2 = orddtlselect.selectExpr("cast(shippedDate as timestamp) dt","orderID","shipCity","customerID","shippedDate","productID","unitPrice","quantity","discount","amount")
+
+
+
+from pyspark.sql.functions import *
+
+orddtlschema=StructType([StructField("order_item_id",IntegerType(),True),\
+						StructField("order_item_order_id",IntegerType(),True),\
+						StructField("order_item_product_id",IntegerType(),True),\
+						StructField("order_item_quantity",DoubleType(),True),\
+						StructField("order_item_subtotal",DoubleType(),True),\
+						StructField("order_item_product_price",DoubleType(),True)])
+
+						
+spark
+.format("kafka")
+.option("kafka.bootstrap.servers", "localhost:9092")
+.option("subscribe", "test1")
+.option("startingOffsets", "latest")
+.load()
+.selectExpr("cast (value as string) as json")
+.select(from_json("json",orddtlschema).as("data"))
+.writeStream
+.format("parquet")
+.option("path","")
+.trigger("1 minute")
+.option("checkpintLocation","/cp/")
+.start()
+
+
+spark
+.format("kafka")
+.option("kafka.bootstrap.servers", "localhost:9092")
+.option("subscribe", "test1")
+.option("startingOffsets", "latest")
+.load()
+.groupBy("cast (value as string) as key")
+.agg(count("*"))
+.writeStream
+.format("kafka")
+.option("topic","output1")
+.trigger("1 minute")
+.outputMode("update")
+.option("checkpintLocation","/cp/")
+.start()

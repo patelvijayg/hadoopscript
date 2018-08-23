@@ -7,7 +7,7 @@
 #$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test1
 #$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181
 #$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test1
-#$KAFKA_HOME/bin/kafka-console-consumer.sh --broker-list localhost:9092 --from-beginning --topic test1 
+#$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic test1 
 
 #.cdspark ; ./bin/spark-submit --master local[4]  
 #pyspark --master local[2] --conf spark.ui.port=4050 --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.1 $SCRIPT_DIR/samples/kafka_integration.py

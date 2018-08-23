@@ -7,19 +7,32 @@
 #$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test1
 #$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181
 #$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test1
-#$KAFKA_HOME/bin/kafka-console-consumer.sh --broker-list localhost:9092 --from-beginning --topic test1 
+#$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic test1 
 
 #.cdspark ; ./bin/spark-submit --master local[4]  
-#pyspark --master local[2] --conf spark.ui.port=4050 --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.2.0 $SCRIPT_DIR/samples/kafka_integration.py
+#pyspark --master local[3] --conf spark.ui.port=4050 --conf spark.sql.shuffle.partitions=11 --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.1 $SCRIPT_DIR/samples/kafka_integration.py
 
+#echo -e '{"name":"one","age":1} \n {"name":"two","age":2} \n {"name":"three","age":3} \n {"name":"four","age":4}' | $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test1
 
 #from pyspark.streaming import StreamingContext
 #from pyspark.streaming.kafka import KafkaUtils
-#from pyspark.sql.types import *
+#sc.setLogLevel("TRACE")
+from pyspark.sql.types import *
 from pyspark.sql.functions import *
-sc.setLogLevel("TRACE")
-lines  = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("subscribe", "test1").load().selectExpr("CAST(value AS STRING)")
-words = lines.select(explode(split(lines.value, ' ')).alias('word'))
-wordCounts = words.groupBy('word').count()
-query = wordCounts.writeStream.outputMode('complete').format('console').start()
-query.awaitTermination()
+spark.conf.set("spark.sql.shuffle.partitions", 11)
+readstream  = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("subscribe", "test1").load()
+linesvalue=readstream.selectExpr("CAST(value AS STRING)")
+dataschema= StructType([StructField("name", StringType(), True),StructField("age", IntegerType(), True)]) 
+datadf1=linesvalue.select(from_json("value",dataschema).alias("jsondata"))
+datadf1.groupBy("jsondata.name").count().writeStream.outputMode('complete').format('console').start()
+datadf2=datadf1
+datadf2.writeStream.format("parquet").option("path","/tmp/d1/").option("checkpointLocation","/cp2/").start()
+
+
+datadf3.writeStream.format("text").option("path","/tmp/txt/").option("checkpointLocation","/cp3/").start()
+
+datadf1.selectExpr("CAST(jsondata AS STRING) as value").writeStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("topic","output1").outputMode("update").option("checkpointLocation","/cp4/").start()
+
+datadf5=linesvalue.select(from_json("value",dataschema).alias("jsondata")).selectExpr("jsondata.name || '---'|| jsondata.age").where("jsondata.name!='one'")
+
+datadf5.writeStream.format("text").option("path","/tmp/txt1/").option("checkpointLocation","/cp3/").start()
