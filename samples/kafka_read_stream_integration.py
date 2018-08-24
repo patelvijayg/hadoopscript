@@ -36,3 +36,14 @@ datadf1.selectExpr("CAST(jsondata AS STRING) as value").writeStream.format("kafk
 datadf5=linesvalue.select(from_json("value",dataschema).alias("jsondata")).selectExpr("jsondata.name || '---'|| jsondata.age").where("jsondata.name!='one'")
 
 datadf5.writeStream.format("text").option("path","/tmp/txt1/").option("checkpointLocation","/cp3/").start()
+
+
+orddtlschema=StructType([StructField("order_item_id",IntegerType(),True),\
+						StructField("order_item_order_id",IntegerType(),True),\
+						StructField("order_item_product_id",IntegerType(),True),\
+						StructField("order_item_quantity",DoubleType(),True),\
+						StructField("order_item_subtotal",DoubleType(),True),\
+						StructField("order_item_product_price",DoubleType(),True)])
+streamload  = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("subscribe", "test1").load()
+data1=streamload.selectExpr("cast(value as string) as value").select(from_json(col("value"), orddtlschema))
+data1.writeStream.format("console").start();
