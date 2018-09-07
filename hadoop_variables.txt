@@ -1,5 +1,5 @@
-export JAVA_HOME=/usr/java/jdk1.8.0_181-amd64
-export JRE_HOME=/usr/java/jdk1.8.0_181-amd64/jre
+export JAVA_HOME=/usr
+export JRE_HOME=/usr
 export HADOOP_HOME=/usr/hadoop
 export HADOOP_PREFIX=$HADOOP_HOME
 export HADOOP_PID_DIR=$HADOOP_HOME/pid

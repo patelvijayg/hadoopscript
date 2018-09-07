@@ -34,14 +34,14 @@
 
 # Options read in YARN client/cluster mode
 # - SPARK_CONF_DIR, Alternate conf dir. (Default: ${SPARK_HOME}/conf)
-HADOOP_CONF_DIR=${HADOOP_CONF_DIR} #, to point Spark towards Hadoop configuration files
+#HADOOP_CONF_DIR=${HADOOP_CONF_DIR} #, to point Spark towards Hadoop configuration files
 # - YARN_CONF_DIR, to point Spark towards YARN configuration files when you use YARN
 # - SPARK_EXECUTOR_CORES, Number of cores for the executors (Default: 1).
 # - SPARK_EXECUTOR_MEMORY, Memory per Executor (e.g. 1000M, 2G) (Default: 1G)
 # - SPARK_DRIVER_MEMORY, Memory for Driver (e.g. 1000M, 2G) (Default: 1G)
 
 # Options for the daemons used in the standalone deploy mode
-SPARK_MASTER_HOST=master1 #, to bind the master to a different IP address or hostname
+#SPARK_MASTER_HOST=master1 #, to bind the master to a different IP address or hostname
 # - SPARK_MASTER_PORT / SPARK_MASTER_WEBUI_PORT, to use non-default ports for the master
 # - SPARK_MASTER_OPTS, to set config properties only for the master (e.g. "-Dx=y")
 # - SPARK_WORKER_CORES, to set the number of cores to use on this machine
@@ -67,3 +67,7 @@ SPARK_MASTER_HOST=master1 #, to bind the master to a different IP address or hos
 # You might get better performance to enable these options if using native BLAS (see SPARK-21305).
 # - MKL_NUM_THREADS=1        Disable multi-threading of Intel MKL
 # - OPENBLAS_NUM_THREADS=1   Disable multi-threading of OpenBLAS
+
+
+#HADOOP_CONF_DIR=${HADOOP_CONF_DIR}
+#SPARK_MASTER_HOST=master1

@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-JAVA_HOME=/usr/java/jdk1.8.0_181-amd64
+JAVA_HOME=/usr
 # User for YARN daemons
 export HADOOP_YARN_USER=${HADOOP_YARN_USER:-yarn}
 
