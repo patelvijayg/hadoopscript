@@ -105,7 +105,7 @@ sudo chown -R vagrant:vagrant $install_dir/$spark_version
 sudo chown -R vagrant:vagrant /public
 sudo chown -R vagrant:vagrant /tmp/spark
 sudo chmod 400 /home/vagrant/.ssh/id_rsa
-
+echo "192.168.56.201	master1		slave1" >> /etc/hosts
 echo "Installation done succesfully"
 echo "now loagin as vagrant and run  .copyandsync and reset_factory.sh and .starthdfs and unittest.sh"
 INSTALLATION
