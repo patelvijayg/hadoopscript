@@ -97,8 +97,8 @@ sudo rm $rpm/$spark_binary
 sudo rm $rpm/$hadoop_binary 
 echo "Hadoop installtion completed"
 
-sudo [[ ! -d /public ]] && mkdir /public
-sudo [[ ! -d /tmp/spark ]] && mkdir /tmp/spark
+[[ ! -d /public ]] && mkdir /public
+[[ ! -d /tmp/spark ]] && mkdir -p /tmp/spark
 sudo chown -R vagrant:vagrant /home/vagrant/
 sudo chown -R vagrant:vagrant $install_dir/$hadoop_version
 sudo chown -R vagrant:vagrant $install_dir/$spark_version
