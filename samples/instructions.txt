@@ -175,7 +175,7 @@ spark
 .writeStream
 .format("kafka")
 .option("topic","output1")
-.trigger("1 minute")
+.trigger(continuous="1 second")
 .outputMode("update")
 .option("checkpintLocation","/cp/")
 .start()

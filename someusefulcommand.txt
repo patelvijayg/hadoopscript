@@ -4,6 +4,10 @@ hdfs dfs -ls /
 hdfs dfs -Ddfs.replication=2 -put file /hadoopdir
 hdfs dfs -setrep -R -w 2 /data1/uPM_all_metrics-20180730080000-20180730081500.csv
 
+hdfs dfs -chmod -R a+r,g+w /public/vijayl
+hdfs dfs -chmod -R a+x /public/vijayl
+hdfs dfs -chmod -R gu+rw /public/vijayl
+
 hdfs dfsadmin -report
 hdfs dfsadmin -refreshNodes
 
@@ -14,6 +18,8 @@ hdfs getconf -confKey dfs.heartbeat.interval
 hdfs fsck / -files
 hdfs fsck / -openforwrite
 hdfs fsck /file -files -blocks -locations
+
+
 
 yarn application -list
 yarn rmadmin -refreshNodes
@@ -26,6 +32,8 @@ yarn classpath
 $SPARK_HOME/sbin/stop-all.sh && slepp 4 && copyandsync
 $SPARK_HOME/bin/spark-submit $SPARK_HOME/examples/src/main/python/pi.py  1000 --conf spark.executor.memory=64m  --conf spark.executor.cores=1 --master yarn --deploy-mode client
 ssh -t slave1  "~/scripts/node.sh start"
+
+val v=readme.flatMap(l => l.split("")).map(ch => (ch,1)).filter(f=>f._1.contains(" ")==false).reduceByKey(_+_).reduce((c,i)=> if(c._2>i._2) c else i)
 
  ./yarn-daemon.sh start nodemanager
  ./hadoop-daemon.sh start datanode
