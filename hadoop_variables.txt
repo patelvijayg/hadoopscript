@@ -20,3 +20,11 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 export PYSPARK_PYTHON=python
 export SPARK_MAJOR_VERSION=2
 export PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/sbin:$SPARK_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+
+function startnotebook () 
+{
+export PYSPARK_PYTHON=python3
+export PYSPARK_DRIVER_PYTHON="jupyter"
+export PYSPARK_DRIVER_PYTHON_OPTS="notebook --NotebookApp.open_browser=False --NotebookApp.ip='*' --NotebookApp.port=8880"
+$SPARK_HOME/bin/pyspark --master local[3] --conf spark.ui.port=4050 --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.1 --conf spark.sql.shuffle.partitions=11
+}
