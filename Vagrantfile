@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			srvnode.vm.hostname = cust_node[:hostname]
 			srvnode.vm.network :private_network, ip: cust_node[:ip]
 			srvnode.vm.provider "virtualbox" do |v|
-			   v.customize ["modifyvm", :id, "--memory", cust_node[:mem]]
+			  v.customize ["modifyvm", :id, "--memory", cust_node[:mem]]
 			srvnode.vm.provision "shell", inline: $script
 			end #Provider
 		end #define	
