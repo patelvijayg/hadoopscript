@@ -52,14 +52,7 @@ sudo yum install epel-release -y
 sudo yum -y install vim nano p7zip unzip net-tools tcpdump wget nc git
 echo "installing java............"
 sudo yum install -y java-1.8.0-openjdk-devel
-
-git clone https://github.com/patelvijayg/hadoopscript.git /home/vagrant/scripts
-echo '[[  -f /home/vagrant/scripts/alias.txt ]] && source /home/vagrant/scripts/alias.txt' >> /home/vagrant/.bashrc
-echo '[[  -f /home/vagrant/scripts/hadoop_variables.txt ]] && source /home/vagrant/scripts/hadoop_variables.txt' >> /home/vagrant/.bashrc
-
-echo 'import rlcompleter, readline' >> "/home/vagrant/.pythonrc"
-echo 'readline.parse_and_bind("tab: complete")'>> "/home/vagrant/.pythonrc"
-
+echo "export JAVA_HOME=/usr">>/home/vagrant/.bashrc
 echo "Java installtion completed"
 INSTALLATION
 
@@ -71,6 +64,14 @@ export spark_binary=spark-2.3.1-bin-hadoop2.7.tgz
 export spark_version=spark-2.3.1-bin-hadoop2.7
 rpm=/home/vagrant/rpm
 install_dir=/usr
+
+git clone https://github.com/patelvijayg/hadoopscript.git /home/vagrant/scripts
+echo '[[  -f /home/vagrant/scripts/alias.txt ]] && source /home/vagrant/scripts/alias.txt' >> /home/vagrant/.bashrc
+echo '[[  -f /home/vagrant/scripts/hadoop_variables.txt ]] && source /home/vagrant/scripts/hadoop_variables.txt' >> /home/vagrant/.bashrc
+
+echo 'import rlcompleter, readline' >> "/home/vagrant/.pythonrc"
+echo 'readline.parse_and_bind("tab: complete")'>> "/home/vagrant/.pythonrc"
+
 
 echo "Hadoop & spark Downloading started"
 
