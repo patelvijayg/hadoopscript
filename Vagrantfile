@@ -1,7 +1,8 @@
 VAGRANTFILE_API_VERSION = "2"
 $sshsetup = <<-SSHSETTING
 [[ ! -d /home/vagrant/.ssh/ ]] && mkdir -p /home/vagrant/.ssh
-KEY_STR='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCsL0Q33EL9Xe2jzd9l+Fft/cse5NCDI3uicDZGn4eu8hsik0yaKS91JR8u87npziT6Bu6dYqyrtm73Lo09MG8GM9a+RldGm0pU1nzEDNWtG2NYJJnKGxHNvYhYZsliQrX33IM51ChX+r/xhSJRwwdpb16s+OxKZ+5vwpPmy7U0KeKsLWGWW4f+zd+RnrDBFQp7GHlzg57KmQPv8E2UYUZFQskg97bswUJGqfLhDSyULTtZBP5nJJIB76oVR7R48GRMISy68NYiTuP5uuzbkGmweoPHQzFD9nb3/Ja0qWZoQc4/V6CkvOArGbx+q6uekrY8YQrK0vPGQ15Pl2uGEtd vagrant@master1' 
+KEY_STR1='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCsL0Q33EL9Xe2jzd9l+Fft/cse5NCDI3uicDZGn4eu8hsik0yaKS91JR8u87npziT6Bu6dYqyrtm73Lo09MG8GM9a+RldGm0pU1nzEDNWtG2NYJJnKGxHNvYhYZsliQrX33IM51ChX+r/xhSJRwwdpb16s+OxKZ+5vwpPmy7U0KeKsLWGWW4f+zd+RnrDBFQp7GHlzg57KmQPv8E2UYUZFQskg97bswUJGqfLhDSyULTtZBP5nJJIB76oVR7R48GRMISy68NYiTuP5uuzbkGmweoPHQzFD9nb3/Ja0qWZoQc4/V6CkvOArGbx+q6uekrY8YQrK0vPGQ15Pl2uGEtd vagrant@master1' 
+KEY_STR2='ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAxS4eA1yQkk9kGtz8xrgvbSUrMVMYyFuFjv2uWBEQAVyfLyRjeicxZ4XU8fOhNBNzEEPozPXhh/atbAVyKuyryKJakNrt2zF7A0U9tzM9KpBxA/us7IsYt3sSjmxhJl+YrZHaph3siEN1SkzrKwTh9G/1l/H/G/JAgHCBhwPlG4M= rsa 1024-022818'
 ID_RSA_STR=$(cat <<EOF
 -----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAwrC9EN9xC/V3to83fZfhX7f3LHuTQgyN7onA2Rp+HrvIbIpN
@@ -33,8 +34,10 @@ lJTM/TQkDG0hZz6108JLHBwv5VKCHPoitlEhpdj9h3T0MNE1XTHu
 EOF
 )
 sudo echo "${ID_RSA_STR}" > /home/vagrant/.ssh/id_rsa
-sudo echo "${KEY_STR}" > /home/vagrant/.ssh/authorized_keys
-sudo echo "${KEY_STR}" > /home/vagrant/.ssh/id_rsa.pub
+sudo echo "${KEY_STR1}" >> /home/vagrant/.ssh/authorized_keys
+sudo echo "${KEY_STR1}" > /home/vagrant/.ssh/id_rsa.pub
+sudo echo "${KEY_STR2}" >> /home/vagrant/.ssh/authorized_keys
+sudo echo "${KEY_STR2}" > /home/vagrant/.ssh/Vijay_rsa1024.pub
 
 sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 sudo echo "Host *" > /home/vagrant/.ssh/config
@@ -61,7 +64,7 @@ echo "Java installtion completed"
 INSTALLATION
 
 
-$hadoopinstallation = <<-INSTALLATION
+$hadoopinstallation = <<-HINSTALLATION
 export hadoop_binary=hadoop-2.7.6.tar.gz
 export hadoop_version=hadoop-2.7.6
 export spark_binary=spark-2.3.1-bin-hadoop2.7.tgz
@@ -97,18 +100,18 @@ sudo rm $rpm/$spark_binary
 sudo rm $rpm/$hadoop_binary 
 echo "Hadoop installtion completed"
 
-sudo [[ ! -d /public ]] && mkdir /public
-sudo [[ ! -d /tmp/spark ]] && mkdir /tmp/spark
+[[ ! -d /public ]] && mkdir /public
+[[ ! -d /tmp/spark ]] && mkdir -p /tmp/spark
 sudo chown -R vagrant:vagrant /home/vagrant/
-sudo chown -R vagrant:vagrant $install_dir/$hadoop_version
-sudo chown -R vagrant:vagrant $install_dir/$spark_version
-sudo chown -R vagrant:vagrant /public
-sudo chown -R vagrant:vagrant /tmp/spark
+sudo chown -R vagrant:vagrant $install_dir/$hadoop_version/
+sudo chown -R vagrant:vagrant $install_dir/$spark_version/
+sudo chown -R vagrant:vagrant /public/
+sudo chown -R vagrant:vagrant /tmp/spark/
 sudo chmod 400 /home/vagrant/.ssh/id_rsa
-
+echo "192.168.56.201 	master1		slave1" >> /etc/hosts
 echo "Installation done succesfully"
 echo "now loagin as vagrant and run  .copyandsync and reset_factory.sh and .starthdfs and unittest.sh"
-INSTALLATION
+HINSTALLATION
 
 
 
@@ -124,11 +127,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			srvnode.ssh.insert_key = false
 			srvnode.vm.provider "virtualbox" do |v|
 				v.customize ["modifyvm", :id, "--memory", 1024]
+			end #Provider
 			srvnode.vm.provision "shell", inline: $sshsetup	
 			srvnode.vm.provision "shell", inline: $installation	
 			srvnode.vm.provision "shell", inline: $hadoopinstallation	
 			#srvnode.vm.provision "shell", inline: $script
-			end #Provider
 	end #define
   end #each Loop 
 end #configure
